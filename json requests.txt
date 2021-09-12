@@ -12,7 +12,7 @@
 post чтобы удалить опрос
 {
 "token" : "admin",
-"quiz_id" : "4"
+"question_id":"1"
 }
 
 post пройти опрос

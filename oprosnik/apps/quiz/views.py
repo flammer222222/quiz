@@ -88,6 +88,14 @@ class QuizeAdmin(APIView):
 				return Response({"success": "question '{}' created successfully".format(question_saved.question_text)})
 			return Response({"fail": "incorrect token"})		
 
+	# удаление вопроса
+	class DelQuiz(APIView):
+		def post(self, request):
+			token = request.data.get('token')
+			if token == token_auth:
+				quizList = Question.objects.filter(id=request.data.get("question_id"))
+				quizList.delete()
+			return Response({"success": "question deleted successfully"})
 
 def index():
 	return Response()
