@@ -37,7 +37,7 @@ class QuizeUser(APIView):
 			serializer = UserQuestionSerializer(data=question_list, many=True)
 			if serializer.is_valid(raise_exception=True):
 				serializer.save()
-				return Response(str(question_list))#{"success": "Quiz answer saved successfully"}, 
+				return Response({"success": "Quiz answer saved successfully"}) 
 
 # для админа:
 class QuizeAdmin(APIView):
@@ -69,10 +69,12 @@ class QuizeAdmin(APIView):
 
 	# удаление опроса
 	class DelQuiz(APIView):
-		def delete(self, request):
-			quizList = Quiz.objects.all()
-			serializer = QuizSerializer(quizList, many=True)
-			return Response({"QuizList": serializer.data})
+		def post(self, request):
+			token = request.data.get('token')
+			if token == token_auth:
+				quizList = Quiz.objects.filter(id=request.data.get('quiz_id'))
+				quizList.delete()
+			return Response({"success": "Quiz deleted successfully"})
 
 	# добавление вопроса в опросе
 	class AddQuestion(APIView):

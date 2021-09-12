@@ -6,7 +6,7 @@ urlpatterns = [
 	path('', views.index, name = 'index'),
 	path('admin/quiz/add', views.QuizeAdmin.AddQuiz.as_view()),
 	path('admin/quiz/edit', views.QuizeAdmin.EditQuiz.as_view()),
-	path('admin/quiz/del', views.index, name = 'index'),
+	path('admin/quiz/del', views.QuizeAdmin.DelQuiz.as_view()),
 	path('admin/quiz/question/add',  views.QuizeAdmin.AddQuestion.as_view()),
 	path('admin/quiz/question/edit', views.index, name = 'index'),
 	path('admin/quiz/question/del', views.index, name = 'index'),
