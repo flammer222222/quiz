@@ -22,7 +22,7 @@ class QuizeUser(APIView):
 	class GetQuizQuestions(APIView):
 		def post(self, request):
 			quizList = Question.objects.filter(quiz_title=request.data.get('quiz_id'))
-			serializer = QuizQuestionSerializer(quizList, many=True)
+			serializer = QuestionSerializer(quizList, many=True)
 			return Response(JSONRenderer().render(serializer.data))
 
 	# прохождение опроса
@@ -54,19 +54,6 @@ class QuizeAdmin(APIView):
 				return Response({"success": "Quiz '{}' created successfully".format(quiz_saved.quiz_title)})
 			return Response({"fail": "incorrect token"})
 
-	# изменение опроса
-	class EditQuiz(APIView):
-		def put(self, request):
-			quiz = request.data.get('quiz')
-			token = request.data.get('token')
-			if token == token_auth:
-				serializer = QuizSerializer(data=quiz)
-				if serializer.is_valid(raise_exception=True):
-					model = Quiz.objects.filter(serializer.quiz_title)
-					# quiz_saved = serializer.update()
-				return Response({"success": "Quiz '{}' created successfully".format(quiz_saved.quiz_title)})
-			return Response({"fail": "incorrect token"})
-
 	# удаление опроса
 	class DelQuiz(APIView):
 		def post(self, request):
@@ -89,26 +76,10 @@ class QuizeAdmin(APIView):
 			return Response({"fail": "incorrect token"})		
 
 	# удаление вопроса
-	class DelQuiz(APIView):
+	class DelQuestion(APIView):
 		def post(self, request):
 			token = request.data.get('token')
 			if token == token_auth:
 				quizList = Question.objects.filter(id=request.data.get("question_id"))
 				quizList.delete()
 			return Response({"success": "question deleted successfully"})
-
-def index():
-	return Response()
-
-# авторизация в системе
-
-# изменение опроса
-
-
-# изменение вопроса в опросе
-# удаление вопроса в опросе
-
-# для клиента
-# создание пользователя с уникальным id
-
-# прохождение опроса

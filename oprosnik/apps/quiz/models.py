@@ -14,7 +14,7 @@ class Quiz(models.Model):
 class Question(models.Model):
 	quiz_title = models.ForeignKey(Quiz, on_delete = models.CASCADE, related_name='+')
 	question_text = models.TextField('текст вопроса')
-	possible_answer = models.TextField('возможные варианты ответа')
+	possible_answer = models.TextField('возможные варианты ответа', blank=True)
 	question_type = models.IntegerField('тип вопроса')
 
 	def __str__(self):
