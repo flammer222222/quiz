@@ -1,0 +1,33 @@
+{
+"token" : "admin", 
+    "quiz":
+	{
+	"quiz_title" : "какой ты повар",
+ 	"quiz_description" : "вычисляем поваров",
+ 	"quiz_start" : "2021-04-15",
+ 	"quiz_end" : "2022-05-22"
+	}
+}
+
+put method
+{
+"token" : "admin", 
+    "quiz":
+	{
+	"quiz_title" : "какой ты поварррр",
+ 	"quiz_description" : "вычисляем поваррров",
+ 	"quiz_end" : "2042-05-22"
+	}
+}
+post question
+
+{
+"token" : "admin", 
+    "question":
+	{
+	"quiz_title" : "какой ты повар",
+ 	"question_text" : "вычисляем поваррров",
+ 	"possible_answer" : "nhfnfnf / sdasda / sdsd",
+	"question_type" : 1
+	}
+}
