@@ -11,20 +11,18 @@
 
 post пройти опрос
 {
-"user_id" : "1",
-"quiz_id" : "4",
-"question_list":{
-            "question_text": "вычисляем поваррров",
-            "answer": "nhfnfnf / sdasda / sdsd"
+"user_id" : 1,
+"quiz_id" : 4,
+"question_list":[
+	{
+            "question_text": 6,
+            "answer": "ответ на 6"
         },
         {
-            "question_text": "ывпы",
-            "answer": "ывпы"
-        },
-        {
-            "question_text": "ф1124",
-            "answer": "фыа1242111"
+            "question_text": 7,
+            "answer": "ответ на 7"
         }
+]
 }
 
 post чтобы узнать вопросы из опроса

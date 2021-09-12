@@ -23,7 +23,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 # 		model = User
 # 		fields = ('question_text', 'answer')
 
-class GetQuizQuestionSerializer(serializers.ModelSerializer):
+class UserQuestionSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Question
-		fields = ('question_text', 'possible_answer', 'question_type')
+		model = User
+		fields = ('user_id', 'quiz_title', 'question_text', 'answer')

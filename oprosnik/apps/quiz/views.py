@@ -4,7 +4,7 @@ from rest_framework.renderers import JSONRenderer
 from django.utils import timezone
 
 from . models import Quiz, User, Question
-from . serializers import QuizSerializer, QuestionSerializer, GetQuizQuestionSerializer
+from . serializers import QuizSerializer, QuestionSerializer, UserQuestionSerializer
 
 token_auth = 'admin'
 # для клиента
@@ -15,21 +15,29 @@ class QuizeUser(APIView):
 		def get(self, request):
 			quizList = Quiz.objects.all()
 			serializer = QuizSerializer(quizList, many=True)
-			return Response({"QuizList": serializer.data})
+			# return Response({"QuizList": serializer.data})
+			return Response(JSONRenderer().render(serializer.data))
 
 	# получение вопросов в опросе 
 	class GetQuizQuestions(APIView):
 		def post(self, request):
 			quizList = Question.objects.filter(quiz_title=request.data.get('quiz_id'))
-			serializer = GetQuizQuestionSerializer(quizList, many=True)
-			return Response({"QuizList": serializer.data})
+			serializer = QuizQuestionSerializer(quizList, many=True)
+			return Response(JSONRenderer().render(serializer.data))
 
-	# получение вопросов в опросе 
+	# прохождение опроса
 	class TakeQuizQuestions(APIView):
 		def post(self, request):
-			quizList = Question.objects.filter(quiz_title=request.data.get('quiz_id'))
-			serializer = GetQuizQuestionSerializer(quizList, many=True)
-			return Response({"QuizList": serializer.data})
+			question_list = request.data.get('question_list')
+			user_id = request.data.get('user_id')
+			quiz_id = request.data.get('quiz_id')
+			for element in question_list:
+				element['user_id'] = user_id
+				element['quiz_title'] = quiz_id
+			serializer = UserQuestionSerializer(data=question_list, many=True)
+			if serializer.is_valid(raise_exception=True):
+				serializer.save()
+				return Response(str(question_list))#{"success": "Quiz answer saved successfully"}, 
 
 # для админа:
 class QuizeAdmin(APIView):

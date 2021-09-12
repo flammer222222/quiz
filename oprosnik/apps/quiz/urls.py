@@ -12,6 +12,6 @@ urlpatterns = [
 	path('admin/quiz/question/del', views.index, name = 'index'),
 
 	path('user/get_active_quiz', views.QuizeUser.GetActiveQuiz.as_view()),
-	path('user/take_quiz', views.QuizeUser.GetQuizQuestions.as_view()),
+	path('user/take_quiz', views.QuizeUser.TakeQuizQuestions.as_view()),
 	path('user/get_quiz_result', views.QuizeUser.GetQuizQuestions.as_view()),
 ]
