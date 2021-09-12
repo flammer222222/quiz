@@ -9,6 +9,29 @@
 	}
 }
 
+post пройти опрос
+{
+"user_id" : "1",
+"quiz_id" : "4",
+"question_list":{
+            "question_text": "вычисляем поваррров",
+            "answer": "nhfnfnf / sdasda / sdsd"
+        },
+        {
+            "question_text": "ывпы",
+            "answer": "ывпы"
+        },
+        {
+            "question_text": "ф1124",
+            "answer": "фыа1242111"
+        }
+}
+
+post чтобы узнать вопросы из опроса
+{
+"quiz_id" : "4"
+}
+
 put method
 {
 "token" : "admin", 
@@ -25,7 +48,7 @@ post question
 "token" : "admin", 
     "question":
 	{
-	"quiz_title" : "какой ты повар",
+	"quiz_title" : "id вопрорса",
  	"question_text" : "вычисляем поваррров",
  	"possible_answer" : "nhfnfnf / sdasda / sdsd",
 	"question_type" : 1

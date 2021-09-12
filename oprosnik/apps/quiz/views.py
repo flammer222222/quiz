@@ -1,10 +1,12 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer
+from django.utils import timezone
 
-from . models import Quiz, User
-from . serializers import QuizSerializer, QuestionResult,  QuestionSerializer
+from . models import Quiz, User, Question
+from . serializers import QuizSerializer, QuestionSerializer, GetQuizQuestionSerializer
 
+token_auth = 'admin'
 # для клиента
 class QuizeUser(APIView):
 
@@ -15,11 +17,18 @@ class QuizeUser(APIView):
 			serializer = QuizSerializer(quizList, many=True)
 			return Response({"QuizList": serializer.data})
 
-	# получение пройденных опросов 
-	class GetQuizResult(APIView):
-		def get(self, request):
-			quizList = User.objects.filter(user_id=1).order_by('quiz_title')	
-			serializer = QuestionResult(quizList, many=True)
+	# получение вопросов в опросе 
+	class GetQuizQuestions(APIView):
+		def post(self, request):
+			quizList = Question.objects.filter(quiz_title=request.data.get('quiz_id'))
+			serializer = GetQuizQuestionSerializer(quizList, many=True)
+			return Response({"QuizList": serializer.data})
+
+	# получение вопросов в опросе 
+	class TakeQuizQuestions(APIView):
+		def post(self, request):
+			quizList = Question.objects.filter(quiz_title=request.data.get('quiz_id'))
+			serializer = GetQuizQuestionSerializer(quizList, many=True)
 			return Response({"QuizList": serializer.data})
 
 # для админа:
@@ -30,7 +39,7 @@ class QuizeAdmin(APIView):
 		def post(self, request):
 			quiz = request.data.get('quiz')
 			token = request.data.get('token')
-			if token == 'admin':
+			if token == token_auth:
 				serializer = QuizSerializer(data=quiz)
 				if serializer.is_valid(raise_exception=True):
 					quiz_saved = serializer.save()
@@ -42,10 +51,10 @@ class QuizeAdmin(APIView):
 		def put(self, request):
 			quiz = request.data.get('quiz')
 			token = request.data.get('token')
-			if token == 'admin':
+			if token == token_auth:
 				serializer = QuizSerializer(data=quiz)
 				if serializer.is_valid(raise_exception=True):
-					Quiz.objects.filter(id=4).update(serializer)
+					model = Quiz.objects.filter(serializer.quiz_title)
 					# quiz_saved = serializer.update()
 				return Response({"success": "Quiz '{}' created successfully".format(quiz_saved.quiz_title)})
 			return Response({"fail": "incorrect token"})
@@ -62,7 +71,7 @@ class QuizeAdmin(APIView):
 		def post(self, request):
 			question = request.data.get('question')
 			token = request.data.get('token')
-			if token == 'admin':
+			if token == token_auth:
 				serializer = QuestionSerializer(data=question)
 				if serializer.is_valid(raise_exception=True):
 					question_saved = serializer.save()

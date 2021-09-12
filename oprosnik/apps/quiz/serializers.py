@@ -17,18 +17,13 @@ class QuestionSerializer(serializers.ModelSerializer):
 		model = Question
 		fields = ('quiz_title', 'question_text', 'possible_answer', 'question_type')
 
-class QuestionResult(serializers.ModelSerializer):
-	question_text = serializers.StringRelatedField()
+# class QuestionResult(serializers.ModelSerializer):
+# 	question_text = serializers.StringRelatedField()
+# 	class Meta:
+# 		model = User
+# 		fields = ('question_text', 'answer')
+
+class GetQuizQuestionSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = User
-		fields = ('question_text', 'answer')
-
-class QuizResult(serializers.Serializer):
-		quiz_title = serializers.CharField(max_length=200)
-		quiz_qustions = QuestionResult
-
-# class UserSerializer(serializers.ModelSerializer):
-#     company_name = serializers.StringRelatedField()
-#     class Meta:
-#         model = User
-#         fields = '__all__'
+		model = Question
+		fields = ('question_text', 'possible_answer', 'question_type')
